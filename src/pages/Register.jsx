@@ -146,24 +146,19 @@ export default function Register() {
       })
 
       if (authError) throw authError
+      if (!data.user) throw new Error('No se obtuvo el usuario tras el registro.')
 
-      // 2. Insertar perfil en la tabla profiles
-      if (data.user) {
-        const { error: profileError } = await supabase.from('profiles').insert({
-          id: data.user.id,
-          nombre_completo: form.nombre.trim(),
-          email: form.email.trim().toLowerCase(),
-          telefono: form.telefono.trim(),
-          municipio: form.municipio,
-          oficio: form.oficio,
-          descripcion: form.descripcion.trim(),
-        })
+      // 2. Insertar perfil en la tabla profiles — obligatorio
+      const { error: profileError } = await supabase.from('profiles').insert({
+        id: data.user.id,
+        nombre_completo: form.nombre.trim(),
+        telefono: form.telefono.trim(),
+        municipio: form.municipio || 'Calarcá',
+        departamento: 'Quindío',
+        autoriza_habeas_data: true,
+      })
 
-        // Si falla (p.ej. por confirmación de email pendiente), se creará luego
-        if (profileError) {
-          console.warn('Perfil: se intentará crear al confirmar el correo.', profileError.message)
-        }
-      }
+      if (profileError) throw profileError
 
       // 3. Determinar resultado
       if (data.session) {

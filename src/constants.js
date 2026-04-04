@@ -49,6 +49,19 @@ export const OFICIOS = [
 // Categorías (alias de OFICIOS para compatibilidad)
 export const CATEGORIAS = OFICIOS
 
+// Disponibilidad horaria del trabajador
+export const DISPONIBILIDAD = [
+  'Tiempo completo (lunes a viernes)',
+  'Medio tiempo (mañanas)',
+  'Medio tiempo (tardes)',
+  'Fines de semana',
+  'Fines de semana y festivos',
+  'Lunes a sábado',
+  'Por obra o destajo',
+  'Disponibilidad inmediata',
+  'A convenir',
+]
+
 // Municipios de Colombia — principales ciudades por departamento
 export const MUNICIPIOS = [
   // Amazonas
