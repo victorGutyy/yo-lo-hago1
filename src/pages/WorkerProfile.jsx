@@ -206,11 +206,11 @@ export default function WorkerProfile() {
     : 0
 
   return (
-    <main className="min-h-screen bg-gray-50 pb-16">
+    <main className="min-h-screen bg-gray-50 pb-16 relative">
 
       {/* ── CABECERA ──────────────────────────────────────────────── */}
       <section
-        className="relative text-white pt-20 pb-10 px-4 overflow-hidden"
+        className="relative text-white pt-20 pb-16 px-4 overflow-hidden"
         style={{ background: 'linear-gradient(135deg, #14532d 0%, #15803d 100%)' }}
       >
         <div
@@ -253,7 +253,7 @@ export default function WorkerProfile() {
       <div className="max-w-3xl mx-auto px-4 -mt-10 space-y-5">
 
         {/* ── DATOS CLAVE + WHATSAPP ─────────────────────────────── */}
-        <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-5 sm:p-6">
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-5 sm:p-6 -mt-12 relative z-10 mx-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-5">
             <div className="text-center">
               <p className="text-2xl font-extrabold text-green-800">

@@ -59,6 +59,7 @@ export default function Dashboard() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [cerrandoSesion, setCerrandoSesion] = useState(false)
+  const [copiado, setCopiado] = useState(false)
 
   // ── Protección de ruta ───────────────────────────────────────
   useEffect(() => {
@@ -108,6 +109,14 @@ export default function Dashboard() {
     setCerrandoSesion(true)
     await cerrarSesion()
     navigate(RUTAS.HOME, { replace: true })
+  }
+
+  const copiarEnlacePerfil = () => {
+    const enlace = `${window.location.origin}/trabajadores/${usuario.id}`
+    navigator.clipboard.writeText(enlace).then(() => {
+      setCopiado(true)
+      setTimeout(() => setCopiado(false), 2000)
+    })
   }
 
   // ── Guardar aquí mientras el auth aún carga ──────────────────
@@ -256,6 +265,12 @@ export default function Dashboard() {
                 >
                   ✏️ Editar tarjeta
                 </Link>
+                <button
+                  onClick={copiarEnlacePerfil}
+                  className="flex-1 text-center border-2 border-green-700 text-green-700 font-semibold text-sm py-2.5 px-4 rounded-xl hover:bg-green-50 active:scale-95 transition-all duration-200"
+                >
+                  {copiado ? '✅ ¡Copiado!' : '🔗 Compartir mi perfil'}
+                </button>
               </div>
             </div>
           ) : (

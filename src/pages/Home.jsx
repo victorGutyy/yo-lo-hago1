@@ -1,7 +1,9 @@
 // Página de inicio — Landing principal de YO LO HAGO
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { RUTAS } from '../constants'
 import logo from '../assets/logo.png'
+import { supabase } from '../lib/supabaseClient'
 
 const OFICIOS = [
   { icono: '🔨', nombre: 'Construcción', descripcion: 'Albañiles, maestros de obra' },
@@ -12,13 +14,20 @@ const OFICIOS = [
   { icono: '🧹', nombre: 'Aseo', descripcion: 'Limpieza de hogar y oficinas' },
 ]
 
-const STATS = [
-  { valor: '+500', etiqueta: 'Trabajadores registrados' },
-  { valor: '32',   etiqueta: 'Municipios activos' },
-  { valor: '+1.2K', etiqueta: 'Servicios conectados' },
-]
-
 export default function Home() {
+  const [stats, setStats] = useState({ trabajadores: null, municipios: null })
+
+  useEffect(() => {
+    const cargarStats = async () => {
+      const [{ count: totalTrabajadores }, { count: totalMunicipios }] = await Promise.all([
+        supabase.from('tarjetas').select('*', { count: 'exact', head: true }).eq('activa', true),
+        supabase.from('profiles').select('municipio', { count: 'exact', head: true }),
+      ])
+      setStats({ trabajadores: totalTrabajadores, municipios: totalMunicipios })
+    }
+    cargarStats()
+  }, [])
+
   return (
     <main>
       {/* ── HERO ─────────────────────────────────────────────────── */}
@@ -140,15 +149,18 @@ export default function Home() {
             YO LO HAGO en números
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-            {STATS.map((stat) => (
+            {[
+              { valor: stats.trabajadores !== null ? `+${stats.trabajadores}` : '...', etiqueta: 'Trabajadores registrados', cargando: stats.trabajadores === null },
+              { valor: stats.municipios !== null ? String(stats.municipios) : '...', etiqueta: 'Municipios activos', cargando: stats.municipios === null },
+              { valor: '+1.2K', etiqueta: 'Servicios conectados', cargando: false },
+            ].map((stat) => (
               <div key={stat.etiqueta} className="text-center">
-                <div className="text-4xl sm:text-5xl font-extrabold text-yellow-400 mb-2 drop-shadow">
+                <div className={`text-4xl sm:text-5xl font-extrabold text-yellow-400 mb-2 drop-shadow${stat.cargando ? ' animate-pulse' : ''}`}>
                   {stat.valor}
                 </div>
                 <div className="text-green-200 text-sm sm:text-base font-medium">
                   {stat.etiqueta}
                 </div>
-                {/* Línea decorativa */}
                 <div className="w-10 h-0.5 bg-yellow-400 mx-auto mt-3 opacity-60" />
               </div>
             ))}

@@ -31,6 +31,15 @@ export default function WorkerCard({ tarjeta }) {
   const telefono = perfil.telefono ?? ''
   const fotoUrl = tarjeta.foto_url || perfil.foto_url || null
   const oficios = Array.isArray(tarjeta.oficios) ? tarjeta.oficios : []
+  const colorDisponibilidad = {
+    'Inmediata': 'bg-green-100 text-green-800',
+    'Por días': 'bg-yellow-100 text-yellow-800',
+    'Fines de semana': 'bg-blue-100 text-blue-800',
+    'Semanal': 'bg-orange-100 text-orange-800',
+    'Mensual': 'bg-gray-100 text-gray-700',
+    'Tiempo completo (lunes a viernes)': 'bg-green-100 text-green-800',
+  }
+  const colorClase = colorDisponibilidad[tarjeta.disponibilidad] || 'bg-gray-100 text-gray-700'
 
   return (
     <article className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col overflow-hidden">
@@ -75,9 +84,8 @@ export default function WorkerCard({ tarjeta }) {
       {/* Disponibilidad */}
       {tarjeta.disponibilidad && (
         <div className="px-5 pb-4">
-          <span className="text-xs text-gray-500 flex items-center gap-1">
-            <span aria-hidden="true">⏱</span>
-            {tarjeta.disponibilidad}
+          <span className={colorClase + ' text-xs font-semibold px-2 py-1 rounded-full'}>
+            ⏱ {tarjeta.disponibilidad}
           </span>
         </div>
       )}

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { APP_NAME, RUTAS } from '../../constants'
 import { useAuth } from '../../hooks/useAuth'
+import logo from '../../assets/logo.png'
 
 export default function Navbar() {
   const { usuario, cerrarSesion } = useAuth()
@@ -22,8 +23,11 @@ export default function Navbar() {
     <header className="bg-green-800 shadow-md">
       <nav className="contenedor flex items-center justify-between h-16">
         {/* Logo */}
-        <Link to={RUTAS.HOME} className="text-white text-xl font-bold tracking-wide hover:text-yellow-400 transition-colors">
-          YO LO HAGO
+        <Link to={RUTAS.HOME} className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+          <div className="bg-white rounded-lg p-1">
+            <img src={logo} alt="Yo Lo Hago" className="h-7 w-auto" />
+          </div>
+          <span className="text-white text-xl font-bold tracking-wide">YO LO HAGO</span>
         </Link>
 
         {/* Menú escritorio */}
