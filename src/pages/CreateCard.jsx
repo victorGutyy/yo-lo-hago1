@@ -86,8 +86,8 @@ export default function CreateCard() {
     const archivo = e.target.files?.[0]
     if (!archivo) return
 
-    if (archivo.size > 3 * 1024 * 1024) {
-      setError('La foto no puede pesar más de 3 MB.')
+    if (archivo.size > 8 * 1024 * 1024) {
+      setError('La foto no puede pesar más de 8 MB.')
       return
     }
     if (!archivo.type.startsWith('image/')) {
@@ -331,7 +331,7 @@ export default function CreateCard() {
                   {fotoPreview || fotoUrlExistente ? 'Cambiar foto' : 'Seleccionar foto'}
                 </label>
                 <p className="text-xs text-gray-400 mt-2">
-                  JPG, PNG o WebP · Máximo 3 MB · Opcional
+                  JPG, PNG o WebP · Máximo 8 MB · Opcional
                 </p>
               </div>
             </div>
