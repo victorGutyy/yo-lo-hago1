@@ -22,11 +22,8 @@ export default function Navbar() {
     <header className="bg-green-800 shadow-md">
       <nav className="contenedor flex items-center justify-between h-16">
         {/* Logo */}
-        <Link
-          to={RUTAS.HOME}
-          className="text-white text-xl font-bold tracking-wide hover:text-yellow-400 transition-colors"
-        >
-          {APP_NAME}
+        <Link to={RUTAS.HOME} className="text-white text-xl font-bold tracking-wide hover:text-yellow-400 transition-colors">
+          YO LO HAGO
         </Link>
 
         {/* Menú escritorio */}

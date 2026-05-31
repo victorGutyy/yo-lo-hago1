@@ -1,6 +1,7 @@
 // Página de inicio — Landing principal de YO LO HAGO
 import { Link } from 'react-router-dom'
 import { RUTAS } from '../constants'
+import logo from '../assets/logo.png'
 
 const OFICIOS = [
   { icono: '🔨', nombre: 'Construcción', descripcion: 'Albañiles, maestros de obra' },
@@ -48,6 +49,13 @@ export default function Home() {
           className="absolute -top-16 -left-16 w-64 h-64 rounded-full opacity-10"
           aria-hidden="true"
           style={{ background: 'radial-gradient(circle, #ff6f00, transparent 65%)' }}
+        />
+
+        {/* Logo semitransparente de fondo */}
+        <img
+          src={logo}
+          alt=""
+          className="absolute inset-0 w-[600px] h-[600px] object-contain mx-auto my-auto left-0 right-0 top-0 bottom-0 opacity-10 pointer-events-none select-none"
         />
 
         {/* Contenido */}

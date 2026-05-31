@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { APP_NAME, RUTAS } from '../../constants'
+import logo from '../../assets/logo.png'
 
 export default function Footer() {
   const anioActual = new Date().getFullYear()
@@ -10,7 +11,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Columna 1 — Marca */}
           <div>
-            <h2 className="text-lg font-bold text-yellow-400 mb-2">{APP_NAME}</h2>
+            <div className="bg-white rounded-xl p-2 inline-block mb-2">
+          <img
+            src={logo}
+            alt="Yo Lo Hago"
+            className="h-12 w-auto"
+          />
+        </div>
             <p className="text-sm text-green-200 leading-relaxed">
               Conectamos personas que necesitan un servicio con trabajadores
               calificados de su comunidad.

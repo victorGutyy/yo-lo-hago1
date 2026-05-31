@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
 import { RUTAS, APP_NAME } from '../constants'
+import logo from '../assets/logo.png'
 
 // Traduce errores de Supabase al español
 function traducirError(msg = '') {
@@ -106,11 +107,8 @@ export default function Login() {
       <div className="w-full max-w-md">
         {/* Encabezado */}
         <div className="text-center mb-8">
-          <Link
-            to={RUTAS.HOME}
-            className="inline-block text-green-800 font-extrabold text-2xl tracking-tight hover:text-green-900 transition-colors mb-2"
-          >
-            {APP_NAME}
+          <Link to={RUTAS.HOME} className="inline-block mb-4">
+            <img src={logo} alt="Yo Lo Hago" className="h-16 w-auto mx-auto" />
           </Link>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-800">
             Iniciá sesión

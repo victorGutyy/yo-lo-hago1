@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
 import { RUTAS, MUNICIPIOS, OFICIOS } from '../constants'
+import logo from '../assets/logo.png'
 
 // Traduce errores de Supabase al español
 function traducirError(msg = '') {
@@ -229,6 +230,7 @@ export default function Register() {
       <div className="max-w-lg mx-auto">
         {/* Encabezado */}
         <div className="text-center mb-6">
+          <img src={logo} alt="Yo Lo Hago" className="h-14 w-auto mx-auto mb-3" />
           <h1 className="text-2xl sm:text-3xl font-extrabold text-green-800">
             Crear mi cuenta
           </h1>
