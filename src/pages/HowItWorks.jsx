@@ -375,10 +375,10 @@ export default function HowItWorks() {
                 supresión o revocar su autorización, escríbanos a:
               </p>
               <a
-                href="mailto:privacidad@yolohago.co"
+                href="mailto:yolohago802@gmail.com"
                 className="inline-block bg-yellow-400 text-green-900 font-bold text-sm px-5 py-2.5 rounded-lg hover:bg-yellow-300 active:scale-95 transition-all duration-200 shadow"
               >
-                privacidad@yolohago.co
+                yolohago802@gmail.com
               </a>
               <p className="text-green-300 text-xs mt-4">
                 Tiempo de respuesta: máximo 10 días hábiles — Ley 1581 de 2012.
