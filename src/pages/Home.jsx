@@ -19,11 +19,15 @@ export default function Home() {
 
   useEffect(() => {
     const cargarStats = async () => {
-      const [{ count: totalTrabajadores }, { count: totalMunicipios }] = await Promise.all([
+      const [{ count: totalTrabajadores }, { data: tarjetasActivas }] = await Promise.all([
         supabase.from('tarjetas').select('*', { count: 'exact', head: true }).eq('activa', true),
-        supabase.from('profiles').select('municipio', { count: 'exact', head: true }),
+        // Traemos el municipio de cada tarjeta activa para contar municipios distintos
+        supabase.from('tarjetas').select('activa, profiles(municipio)').eq('activa', true),
       ])
-      setStats({ trabajadores: totalTrabajadores, municipios: totalMunicipios })
+      const municipiosUnicos = new Set(
+        (tarjetasActivas ?? []).map((t) => t.profiles?.municipio).filter(Boolean)
+      )
+      setStats({ trabajadores: totalTrabajadores, municipios: municipiosUnicos.size })
     }
     cargarStats()
   }, [])

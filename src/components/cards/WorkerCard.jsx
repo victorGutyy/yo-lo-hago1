@@ -28,7 +28,6 @@ export default function WorkerCard({ tarjeta }) {
   const perfil = tarjeta.profiles ?? {}
   const nombre = perfil.nombre_completo ?? 'Sin nombre'
   const municipio = perfil.municipio ?? '—'
-  const telefono = perfil.telefono ?? ''
   const fotoUrl = tarjeta.foto_url || perfil.foto_url || null
   const oficios = Array.isArray(tarjeta.oficios) ? tarjeta.oficios : []
   const colorDisponibilidad = {

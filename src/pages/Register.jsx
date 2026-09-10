@@ -107,7 +107,7 @@ export default function Register() {
     if (form.password.length < 6) return 'La contraseña debe tener mínimo 6 caracteres.'
     if (form.password !== form.confirmar) return 'Las contraseñas no coinciden.'
     if (!form.telefono.trim()) return 'El número de WhatsApp es obligatorio.'
-    if (!/^[0-9+\s\-]{7,15}$/.test(form.telefono.trim()))
+    if (!/^[0-9+\s-]{7,15}$/.test(form.telefono.trim()))
       return 'El número de WhatsApp no parece válido.'
     if (!form.aceptaTerminos)
       return 'Debés aceptar la política de privacidad para continuar.'
@@ -134,7 +134,12 @@ export default function Register() {
     setError('')
 
     try {
-      // 1. Registrar usuario en Supabase Auth
+      // Registrar usuario en Supabase Auth.
+      // El perfil y la tarjeta laboral (oficio + descripción del paso 2) los crea
+      // automáticamente un trigger en la base de datos a partir de estos metadatos,
+      // así funciona igual con o sin confirmación de email activada (con
+      // confirmación pendiente, el cliente no tiene sesión y no podría insertar
+      // directamente por las políticas RLS).
       const { data, error: authError } = await supabase.auth.signUp({
         email: form.email.trim(),
         password: form.password,
@@ -142,6 +147,9 @@ export default function Register() {
           data: {
             nombre_completo: form.nombre.trim(),
             telefono: form.telefono.trim(),
+            municipio: form.municipio,
+            oficio: form.oficio,
+            descripcion: form.descripcion.trim(),
           },
         },
       })
@@ -149,19 +157,7 @@ export default function Register() {
       if (authError) throw authError
       if (!data.user) throw new Error('No se obtuvo el usuario tras el registro.')
 
-      // 2. Insertar perfil en la tabla profiles — obligatorio
-      const { error: profileError } = await supabase.from('profiles').insert({
-        id: data.user.id,
-        nombre_completo: form.nombre.trim(),
-        telefono: form.telefono.trim(),
-        municipio: form.municipio || 'Calarcá',
-        departamento: 'Quindío',
-        autoriza_habeas_data: true,
-      })
-
-      if (profileError) throw profileError
-
-      // 3. Determinar resultado
+      // Determinar resultado
       if (data.session) {
         // Sin confirmación de email — sesión activa de inmediato
         setExitoso(true)

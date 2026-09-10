@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { RUTAS } from '../constants'
 
@@ -52,7 +52,6 @@ function urlWhatsApp(telefono) {
 // ── Página principal ─────────────────────────────────────────────
 export default function WorkerProfile() {
   const { id } = useParams()
-  const navigate = useNavigate()
 
   const [tarjeta, setTarjeta] = useState(null)
   const [referencias, setReferencias] = useState([])

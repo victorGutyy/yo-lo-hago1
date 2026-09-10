@@ -6,9 +6,9 @@
 - Usar siempre VITE_SUPABASE_ANON_KEY para el cliente
 
 ## Stack
-- React 18 + Vite + Tailwind CSS v3
+- React 19 + Vite + Tailwind CSS v3
 - Supabase para auth, base de datos y storage
-- React Router v6 para navegación
+- React Router v7 para navegación
 - NO usamos shadcn/ui en esta fase
 
 ## Convenciones
