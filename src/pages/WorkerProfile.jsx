@@ -65,6 +65,13 @@ export default function WorkerProfile() {
   const [errorVal, setErrorVal] = useState('')
   const [exitoVal, setExitoVal] = useState(false)
 
+  // Reportar perfil
+  const [modalReporte, setModalReporte] = useState(false)
+  const [formReporte, setFormReporte] = useState({ motivo: '', comentario: '' })
+  const [enviandoReporte, setEnviandoReporte] = useState(false)
+  const [errorReporte, setErrorReporte] = useState('')
+  const [exitoReporte, setExitoReporte] = useState(false)
+
   // ── Cargar datos ───────────────────────────────────────────────
   useEffect(() => {
     if (!id) return
@@ -96,7 +103,7 @@ export default function WorkerProfile() {
           .from('valoraciones')
           .select('*')
           .eq('tarjeta_id', tarjetaData.id)
-          .order('created_at', { ascending: false })
+          .order('fecha', { ascending: false })
 
         setValoraciones(valsData ?? [])
       } catch (err) {
@@ -123,7 +130,7 @@ export default function WorkerProfile() {
         .from('valoraciones')
         .insert({
           tarjeta_id: tarjeta.id,
-          nombre_revisor: formVal.nombre.trim(),
+          nombre_cliente: formVal.nombre.trim(),
           comentario: formVal.comentario.trim(),
           estrellas: formVal.estrellas,
         })
@@ -140,6 +147,43 @@ export default function WorkerProfile() {
       setErrorVal('No se pudo guardar la valoración. Intentá de nuevo.')
     } finally {
       setEnviandoVal(false)
+    }
+  }
+
+  // ── Reportar perfil ──────────────────────────────────────────────
+  const MOTIVOS_REPORTE = [
+    'Información falsa',
+    'No responde / no es contactable',
+    'Contenido inapropiado',
+    'Perfil duplicado',
+    'Otro',
+  ]
+
+  const handleReporte = async (e) => {
+    e.preventDefault()
+    if (!formReporte.motivo) { setErrorReporte('Seleccioná un motivo.'); return }
+
+    setEnviandoReporte(true)
+    setErrorReporte('')
+    try {
+      const { error: reporteError } = await supabase.from('reportes').insert({
+        tarjeta_id: tarjeta.id,
+        motivo: formReporte.motivo,
+        comentario: formReporte.comentario.trim() || null,
+      })
+
+      if (reporteError) throw reporteError
+      setExitoReporte(true)
+      setFormReporte({ motivo: '', comentario: '' })
+      setTimeout(() => {
+        setExitoReporte(false)
+        setModalReporte(false)
+      }, 2500)
+    } catch (err) {
+      console.error('Reporte error:', err)
+      setErrorReporte('No se pudo enviar el reporte. Intentá de nuevo.')
+    } finally {
+      setEnviandoReporte(false)
     }
   }
 
@@ -292,6 +336,14 @@ export default function WorkerProfile() {
               Contactar por WhatsApp
             </a>
           )}
+
+          <button
+            type="button"
+            onClick={() => setModalReporte(true)}
+            className="w-full text-center text-xs text-gray-400 hover:text-gray-600 mt-3 transition-colors"
+          >
+            🚩 Reportar este perfil
+          </button>
         </div>
 
         {/* ── OFICIOS ───────────────────────────────────────────────── */}
@@ -393,12 +445,12 @@ export default function WorkerProfile() {
               {valoraciones.map((v) => (
                 <div key={v.id} className="border-b border-gray-100 pb-4 last:border-0 last:pb-0">
                   <div className="flex items-start justify-between gap-2 mb-1">
-                    <p className="text-sm font-semibold text-gray-800">{v.nombre_revisor}</p>
+                    <p className="text-sm font-semibold text-gray-800">{v.nombre_cliente}</p>
                     <Estrellas valor={v.estrellas} />
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">{v.comentario}</p>
                   <p className="text-xs text-gray-400 mt-1">
-                    {new Date(v.created_at).toLocaleDateString('es-CO', {
+                    {new Date(v.fecha).toLocaleDateString('es-CO', {
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric',
@@ -488,6 +540,89 @@ export default function WorkerProfile() {
           </div>
         </div>
       </div>
+
+      {/* ── MODAL: REPORTAR PERFIL ─────────────────────────────────── */}
+      {modalReporte && (
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center px-4 z-50"
+          onClick={() => setModalReporte(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {exitoReporte ? (
+              <div className="text-center py-6">
+                <div className="text-4xl mb-3">✅</div>
+                <p className="text-sm font-semibold text-gray-800">
+                  Gracias, revisaremos este perfil.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-base font-bold text-gray-800">Reportar este perfil</h3>
+                  <button
+                    type="button"
+                    onClick={() => setModalReporte(false)}
+                    className="text-gray-400 hover:text-gray-600 text-xl leading-none"
+                    aria-label="Cerrar"
+                  >
+                    ×
+                  </button>
+                </div>
+
+                <form onSubmit={handleReporte} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1" htmlFor="rep-motivo">
+                      Motivo <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      id="rep-motivo"
+                      value={formReporte.motivo}
+                      onChange={(e) => setFormReporte((p) => ({ ...p, motivo: e.target.value }))}
+                      className="campo"
+                    >
+                      <option value="">— Seleccioná un motivo —</option>
+                      {MOTIVOS_REPORTE.map((m) => (
+                        <option key={m} value={m}>{m}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-medium text-gray-600 mb-1" htmlFor="rep-comentario">
+                      Comentario (opcional)
+                    </label>
+                    <textarea
+                      id="rep-comentario"
+                      value={formReporte.comentario}
+                      onChange={(e) => setFormReporte((p) => ({ ...p, comentario: e.target.value }))}
+                      rows={3}
+                      placeholder="Contanos qué pasó..."
+                      className="campo resize-none"
+                    />
+                  </div>
+
+                  {errorReporte && (
+                    <p className="text-xs text-red-600 flex items-center gap-1">
+                      <span>⚠️</span> {errorReporte}
+                    </p>
+                  )}
+
+                  <button
+                    type="submit"
+                    disabled={enviandoReporte}
+                    className="w-full bg-red-600 text-white font-bold py-3 rounded-xl hover:bg-red-700 active:scale-95 transition-all duration-200 shadow disabled:opacity-60 disabled:cursor-not-allowed text-sm"
+                  >
+                    {enviandoReporte ? 'Enviando...' : 'Enviar reporte'}
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   )
 }

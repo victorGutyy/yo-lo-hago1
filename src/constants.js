@@ -11,6 +11,7 @@ export const RUTAS = {
   DASHBOARD: '/dashboard',
   LOGIN: '/login',
   REGISTRO: '/registro',
+  ADMIN: '/admin',
 }
 
 // Colores del proyecto (referencia JS — usar clases Tailwind en componentes)

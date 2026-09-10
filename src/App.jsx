@@ -10,6 +10,7 @@ import CreateCard from './pages/CreateCard'
 import Dashboard from './pages/Dashboard'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import Admin from './pages/Admin'
 import NotFound from './pages/NotFound'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path={RUTAS.DASHBOARD} element={<Dashboard />} />
             <Route path={RUTAS.LOGIN} element={<Login />} />
             <Route path={RUTAS.REGISTRO} element={<Register />} />
+            <Route path={RUTAS.ADMIN} element={<Admin />} />
             {/* Ruta 404 */}
             <Route path="*" element={<NotFound />} />
           </Routes>
