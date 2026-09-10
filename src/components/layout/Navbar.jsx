@@ -1,13 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { APP_NAME, RUTAS } from '../../constants'
 import { useAuth } from '../../hooks/useAuth'
+import { supabase } from '../../lib/supabaseClient'
 import logo from '../../assets/logo.webp'
 
 export default function Navbar() {
   const { usuario, cerrarSesion } = useAuth()
   const [menuAbierto, setMenuAbierto] = useState(false)
+  const [esAdmin, setEsAdmin] = useState(false)
   const navigate = useNavigate()
+
+  // Solo se consulta si hay sesión; el enlace de admin es puramente
+  // cosmético — el acceso real ya está protegido por RLS en /admin.
+  useEffect(() => {
+    if (!usuario) return
+    supabase
+      .from('profiles')
+      .select('es_admin')
+      .eq('id', usuario.id)
+      .maybeSingle()
+      .then(({ data }) => setEsAdmin(data?.es_admin ?? false))
+  }, [usuario])
 
   const handleCerrarSesion = async () => {
     await cerrarSesion()
@@ -50,6 +64,13 @@ export default function Navbar() {
                   Mi panel
                 </NavLink>
               </li>
+              {esAdmin && (
+                <li>
+                  <NavLink to={RUTAS.ADMIN} className={claseEnlace}>
+                    Admin
+                  </NavLink>
+                </li>
+              )}
               <li>
                 <button
                   onClick={handleCerrarSesion}
@@ -125,6 +146,17 @@ export default function Navbar() {
                     Mi panel
                   </NavLink>
                 </li>
+                {esAdmin && (
+                  <li>
+                    <NavLink
+                      to={RUTAS.ADMIN}
+                      className={claseEnlace}
+                      onClick={() => setMenuAbierto(false)}
+                    >
+                      Admin
+                    </NavLink>
+                  </li>
+                )}
                 <li>
                   <button
                     onClick={() => {
