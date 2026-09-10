@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
+import { useTitulo } from '../hooks/useTitulo'
 import { RUTAS } from '../constants'
 
 // ── Componentes de apoyo ─────────────────────────────────────────
@@ -54,6 +55,7 @@ export default function WorkerProfile() {
   const { id } = useParams()
 
   const [tarjeta, setTarjeta] = useState(null)
+  useTitulo(tarjeta?.profiles?.nombre_completo)
   const [referencias, setReferencias] = useState([])
   const [valoraciones, setValoraciones] = useState([])
   const [cargando, setCargando] = useState(true)

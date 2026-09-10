@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Hammer, Paintbrush, Zap, Wrench, Leaf, Sparkles } from 'lucide-react'
 import { RUTAS } from '../constants'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.webp'
 import { supabase } from '../lib/supabaseClient'
 
 const OFICIOS = [

@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import { OFICIOS, MUNICIPIOS } from '../constants'
 import WorkerCard from '../components/cards/WorkerCard'
+import { useTitulo } from '../hooks/useTitulo'
 
 // Skeleton de tarjeta en carga
 function WorkerCardSkeleton() {
@@ -25,6 +26,8 @@ function WorkerCardSkeleton() {
 }
 
 export default function Workers() {
+  useTitulo('Trabajadores')
+
   const [tarjetas, setTarjetas] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')

@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
 import { RUTAS, MUNICIPIOS, OFICIOS } from '../constants'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.webp'
+import { useTitulo } from '../hooks/useTitulo'
 
 // Traduce errores de Supabase al español
 function traducirError(msg = '') {
@@ -64,6 +65,8 @@ function IndicadorPasos({ pasoActual }) {
 }
 
 export default function Register() {
+  useTitulo('Regístrate')
+
   const { usuario, cargando } = useAuth()
   const navigate = useNavigate()
 

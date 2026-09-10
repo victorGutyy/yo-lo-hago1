@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
 import { RUTAS, APP_NAME } from '../constants'
-import logo from '../assets/logo.png'
+import logo from '../assets/logo.webp'
+import { useTitulo } from '../hooks/useTitulo'
 
 // Traduce errores de Supabase al español
 function traducirError(msg = '') {
@@ -21,6 +22,8 @@ function traducirError(msg = '') {
 }
 
 export default function Login() {
+  useTitulo('Iniciar sesión')
+
   const { usuario, cargando } = useAuth()
   const navigate = useNavigate()
 

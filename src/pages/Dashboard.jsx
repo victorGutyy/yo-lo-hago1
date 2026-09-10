@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
+import { useTitulo } from '../hooks/useTitulo'
 import { RUTAS } from '../constants'
 
 // ── Skeleton de carga ────────────────────────────────────────────
@@ -51,6 +52,8 @@ function StatCard({ icono, valor, etiqueta, proximamente = false }) {
 }
 
 export default function Dashboard() {
+  useTitulo('Mi panel')
+
   const { usuario, cargando: cargandoAuth, cerrarSesion } = useAuth()
   const navigate = useNavigate()
 

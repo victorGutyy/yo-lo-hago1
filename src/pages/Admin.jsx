@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
+import { useTitulo } from '../hooks/useTitulo'
 import { RUTAS } from '../constants'
 
 // ── Badge de estado del reporte ───────────────────────────────────
@@ -19,6 +20,8 @@ function BadgeEstado({ estado }) {
 }
 
 export default function Admin() {
+  useTitulo('Panel de administración')
+
   const { usuario, cargando: cargandoAuth } = useAuth()
   const navigate = useNavigate()
 

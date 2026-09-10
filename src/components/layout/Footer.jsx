@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { APP_NAME, RUTAS } from '../../constants'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.webp'
 
 export default function Footer() {
   const anioActual = new Date().getFullYear()

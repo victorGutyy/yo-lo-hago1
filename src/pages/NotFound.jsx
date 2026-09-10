@@ -1,8 +1,11 @@
 // Página 404
 import { Link } from 'react-router-dom'
 import { RUTAS } from '../constants'
+import { useTitulo } from '../hooks/useTitulo'
 
 export default function NotFound() {
+  useTitulo('Página no encontrada')
+
   return (
     <main className="contenedor py-24 text-center">
       <h1 className="text-6xl font-bold text-green-800 mb-4">404</h1>

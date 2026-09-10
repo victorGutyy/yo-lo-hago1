@@ -1,6 +1,7 @@
 // Página: ¿Cómo funciona? + Verificación de antecedentes + Habeas Data
 // Ley 1581 de 2012 — Colombia
 import { UserPlus, Eye, MessageCircle, Handshake } from 'lucide-react'
+import { useTitulo } from '../hooks/useTitulo'
 
 const PASOS = [
   {
@@ -64,6 +65,8 @@ function Flecha() {
 }
 
 export default function HowItWorks() {
+  useTitulo('Cómo funciona')
+
   return (
     <main>
       {/* ── HERO con gradiente diagonal + patrón de puntos ─────── */}

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { APP_NAME, RUTAS } from '../../constants'
 import { useAuth } from '../../hooks/useAuth'
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.webp'
 
 export default function Navbar() {
   const { usuario, cerrarSesion } = useAuth()

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { useAuth } from '../hooks/useAuth'
+import { useTitulo } from '../hooks/useTitulo'
 import { RUTAS, OFICIOS, DISPONIBILIDAD } from '../constants'
 
 const MAX_DESC = 300
@@ -23,6 +24,8 @@ function Seccion({ numero, titulo, children }) {
 }
 
 export default function CreateCard() {
+  useTitulo('Mi tarjeta laboral')
+
   const { usuario, cargando: cargandoAuth } = useAuth()
   const navigate = useNavigate()
   const fileInputRef = useRef(null)
