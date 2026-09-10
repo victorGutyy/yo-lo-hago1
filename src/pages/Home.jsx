@@ -1,17 +1,18 @@
 // Página de inicio — Landing principal de YO LO HAGO
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { Hammer, Paintbrush, Zap, Wrench, Leaf, Sparkles } from 'lucide-react'
 import { RUTAS } from '../constants'
 import logo from '../assets/logo.png'
 import { supabase } from '../lib/supabaseClient'
 
 const OFICIOS = [
-  { icono: '🔨', nombre: 'Construcción', descripcion: 'Albañiles, maestros de obra' },
-  { icono: '🎨', nombre: 'Pintura', descripcion: 'Pintura interior y exterior' },
-  { icono: '⚡', nombre: 'Electricidad', descripcion: 'Instalaciones y reparaciones' },
-  { icono: '🔧', nombre: 'Plomería', descripcion: 'Tuberías, sanitarios, griferías' },
-  { icono: '🌿', nombre: 'Jardinería', descripcion: 'Jardines, poda, zonas verdes' },
-  { icono: '🧹', nombre: 'Aseo', descripcion: 'Limpieza de hogar y oficinas' },
+  { Icono: Hammer, nombre: 'Construcción', descripcion: 'Albañiles, maestros de obra' },
+  { Icono: Paintbrush, nombre: 'Pintura', descripcion: 'Pintura interior y exterior' },
+  { Icono: Zap, nombre: 'Electricidad', descripcion: 'Instalaciones y reparaciones' },
+  { Icono: Wrench, nombre: 'Plomería', descripcion: 'Tuberías, sanitarios, griferías' },
+  { Icono: Leaf, nombre: 'Jardinería', descripcion: 'Jardines, poda, zonas verdes' },
+  { Icono: Sparkles, nombre: 'Aseo', descripcion: 'Limpieza de hogar y oficinas' },
 ]
 
 export default function Home() {
@@ -122,12 +123,8 @@ export default function Home() {
                 to={RUTAS.TRABAJADORES}
                 className="group bg-gray-50 border border-gray-100 rounded-2xl p-5 flex flex-col items-center text-center hover:bg-green-50 hover:border-green-200 hover:shadow-md active:scale-95 transition-all duration-200"
               >
-                <span
-                  className="text-4xl mb-3 group-hover:scale-110 transition-transform duration-200"
-                  role="img"
-                  aria-hidden="true"
-                >
-                  {oficio.icono}
+                <span className="w-14 h-14 rounded-xl bg-green-100 text-green-800 flex items-center justify-center mb-3 group-hover:scale-110 group-hover:bg-green-800 group-hover:text-white transition-all duration-200">
+                  <oficio.Icono className="w-7 h-7" strokeWidth={1.75} aria-hidden="true" />
                 </span>
                 <span className="text-sm font-bold text-green-800 mb-1">
                   {oficio.nombre}

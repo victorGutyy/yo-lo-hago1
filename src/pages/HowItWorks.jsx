@@ -1,5 +1,6 @@
 // Página: ¿Cómo funciona? + Verificación de antecedentes + Habeas Data
 // Ley 1581 de 2012 — Colombia
+import { UserPlus, Eye, MessageCircle, Handshake } from 'lucide-react'
 
 const PASOS = [
   {
@@ -7,28 +8,28 @@ const PASOS = [
     titulo: 'El trabajador se registra gratis',
     descripcion:
       'Crea su cuenta y completa su tarjeta laboral con nombre, foto, especialidad, ciudad y número de WhatsApp.',
-    icono: '📝',
+    Icono: UserPlus,
   },
   {
     numero: '02',
     titulo: 'La tarjeta queda visible para todos',
     descripcion:
       'El perfil aparece en el portal público. Cualquier persona puede buscarlo por ciudad u oficio sin registrarse.',
-    icono: '👁️',
+    Icono: Eye,
   },
   {
     numero: '03',
     titulo: 'El contratante contacta por WhatsApp',
     descripcion:
       'Al encontrar al trabajador ideal, le escribe directamente por WhatsApp. Sin intermediarios ni espera.',
-    icono: '💬',
+    Icono: MessageCircle,
   },
   {
     numero: '04',
     titulo: 'Acuerdan el trabajo directamente',
     descripcion:
       'Negocian precio y condiciones entre ellos. YO LO HAGO no cobra comisión ni interviene en el acuerdo.',
-    icono: '🤝',
+    Icono: Handshake,
   },
 ]
 
@@ -124,8 +125,8 @@ export default function HowItWorks() {
                   <span className="text-5xl font-extrabold text-green-100 leading-none mb-1 select-none">
                     {paso.numero}
                   </span>
-                  <span className="text-3xl mb-3" role="img" aria-hidden="true">
-                    {paso.icono}
+                  <span className="w-12 h-12 rounded-xl bg-green-100 text-green-800 flex items-center justify-center mb-3">
+                    <paso.Icono className="w-6 h-6" strokeWidth={1.75} aria-hidden="true" />
                   </span>
                   <h3 className="text-sm font-bold text-green-800 mb-2 leading-snug">
                     {paso.titulo}
@@ -155,8 +156,8 @@ export default function HowItWorks() {
                 {/* Card */}
                 <div className="flex-1 bg-white rounded-2xl border-l-4 border-green-700 shadow-md p-5 mb-2 hover:shadow-lg transition-shadow duration-200">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl" role="img" aria-hidden="true">
-                      {paso.icono}
+                    <span className="w-8 h-8 rounded-lg bg-green-100 text-green-800 flex items-center justify-center flex-shrink-0">
+                      <paso.Icono className="w-4 h-4" strokeWidth={1.75} aria-hidden="true" />
                     </span>
                     <h3 className="text-sm font-bold text-green-800 leading-snug">
                       {paso.titulo}
